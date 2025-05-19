@@ -1,0 +1,104 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <stdio.h>
+#include <ctime>
+#include <cmath>
+#include <string>
+#include <stack>
+#include <algorithm>
+#include <numeric>
+#include <queue>
+#include <cstdlib>
+#include <map>
+#include <chrono>
+#include <set>
+#include <iomanip>
+#include <iterator>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+
+int neicou(vector<vector<vector<int>>> m, int i, int j, int curmat)
+{
+	return m[curmat ^ 1][i - 1][j - 1] + m[curmat ^ 1][i - 1][j] + m[curmat ^ 1][i - 1][j + 1] + m[curmat ^ 1][i][j - 1] + m[curmat ^ 1][i][j + 1] + m[curmat ^ 1][i + 1][j - 1] + m[curmat ^ 1][i + 1][j] + m[curmat ^ 1][i + 1][j + 1];
+}
+
+int main()
+{
+	ifstream in("flow.in.TXT");
+	ofstream out("flow.out.TXT");
+
+	int n, m, itecou, curneicou, curmat = 0;
+	in >> n >> m;
+	vector<vector<vector<int>>> lif(2, vector<vector<int>>(n + 2, vector<int>(m + 2, 0)));
+	for (auto i = 0; i < n; i++)
+	{
+		for (auto j = 0; j < m; j++)
+		{
+			in >> lif[0][i + 1][j + 1];
+			lif[1][i + 1][j + 1] = lif[0][i + 1][j + 1];
+		}
+	}
+	in >> itecou;
+	for (auto i = 0; i < n; i++)
+	{
+		for (auto j = 0; j < m; j++)
+		{
+			out << (char)(lif[curmat][i + 1][j + 1] ? 56 : ' ') << ' ';
+		}
+		out << '\n';
+	}
+	out << '\n';
+	while (itecou > 0)
+	{
+		for (auto i = 0; i < n; i++)
+		{
+			for (auto j = 0; j < m; j++)
+			{
+				curneicou = neicou(lif, i + 1, j + 1, curmat);
+				if (lif[curmat][i + 1][j + 1] == 1)
+				{
+					if (curneicou > 3 || curneicou < 2)
+						lif[curmat][i + 1][j + 1] = 0;
+				}
+				else
+				{
+					if (curneicou == 3)
+						lif[curmat][i + 1][j + 1] = 1;
+				}
+			}
+		}
+		for (auto i = 0; i < n; i++)
+		{
+			for (auto j = 0; j < m; j++)
+			{
+				out << (char)(lif[curmat][i + 1][j + 1] ? 56 : ' ') << ' ';
+			}
+			out << '\n';
+		}
+		out << '\n';
+		for (auto i = 0; i < n; i++)
+		{
+			for (auto j = 0; j < m; j++)
+			{
+				lif[curmat ^ 1][i + 1][j + 1] = lif[curmat][i + 1][j + 1];
+			}
+		}
+		itecou--;
+		curmat ^= 1;
+	}
+	for (auto i = 0; i < n; i++)
+	{
+		for (auto j = 0; j < m; j++)
+		{
+			out << (char)(lif[curmat][i + 1][j + 1] ? 56 : ' ') << ' ';
+		}
+		out << '\n';
+	}
+	out << '\n';
+
+	in.close();
+	out.close();
+	return 0;
+}
