@@ -1,0 +1,146 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <stdio.h>
+#include <ctime>
+#include <cmath>
+#include <string>
+#include <stack>
+#include <algorithm>
+#include <numeric>
+#include <queue>
+#include <cstdlib>
+#include <map>
+#include <chrono>
+#include <set>
+#include <iomanip>
+#include <iterator>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+
+int main()
+{
+	/*ifstream in("flow.in.TXT");
+	ofstream out("flow.out.TXT");*/
+
+	/*fstream file("flow.out.TXT", ios::binary | ios::in);
+	int qua1 = 0, qua2 = 0, con = 1, con1 = 1;
+	vector<int> qua;
+	char cha, cha1 = 0;
+	string s, su;
+	while (file.read((char*)(&con1), sizeof(int)))
+	{
+		qua.push_back(con1);
+		if (con1 > 0)
+		{
+			su.clear();
+			while (con1 > 0)
+			{
+				file.read((char*)(&cha), sizeof(char));
+				su += cha;
+				con1--;
+			}
+			/*su.resize(con1);
+			file.read((char*)(&su), con1 * sizeof(char));*
+			s += su;
+		}
+		else if (con1 < 0)
+		{
+			file.read((char*)(&cha), sizeof(char));
+			s += cha;
+		}
+	}
+	cout << s << '\n';
+	for (auto i = 0; i < qua.size(); i++)
+	{
+		cout << qua[i] << ' ';
+	}
+	file.close();
+	file.open("Output text.txt", ios::binary | ios::out);
+	for (auto i = 0, j=0; i<qua.size()&&j<s.size(); j+=abs(qua[i]), i++)
+	{
+		if (qua[i] > 0)
+		{
+			su = s.substr(j, qua[i]);
+			file.write((char*)(&su), su.size() * sizeof(char));
+		}
+		else if (qua[i] < 0)
+		{
+			qua1 = qua[i];
+			while (qua1 > 0)
+			{
+				file.write((char*)(&s[j]), sizeof(char));
+				qua1--;
+			}
+		}
+	}
+	file.close();*/
+
+	/*fstream file("гншолп.TXT", ios::binary | ios::in);
+	int qua1 = 0, qua2=0, con=1;
+	vector<int> qua;
+	char cha, cha1=0;
+	string s, su;
+	while (file.read(reinterpret_cast<char*>(&cha), sizeof(char)))
+	{
+		s += cha;
+	}
+	for (auto i = 0; i+1 < s.size(); )
+	{
+		if (s[i] == s[i + 1])
+		{
+			for (auto j = 1; i+j < s.size() && s[i+j-1] == s[i+j]; j++)
+			{
+				con = j;
+			}
+			qua.push_back(-con-1);
+		}
+		else
+		{
+			for (auto j = 1; i + j < s.size() && s[i+j-1] != s[i + j]; j++)
+			{
+				con = j;
+			}
+			if (con - 1 > 0)
+			{
+				qua.push_back(con - 1);
+			}
+		}
+		i += con;
+	}
+	if (qua.size() > 0 && qua[0] > -1)
+	{
+		qua[0]++;
+	}
+	if (qua.size() > 0 && qua.back() > -1)
+	{
+		qua.back()++;
+	}
+	/*cout << s<<'\n';
+	for (auto i = 0; i < qua.size(); i++)
+	{
+		cout << qua[i] << ' ';
+	}*
+	file.close();
+	file.open("flow.out.TXT", ios::binary | ios::out);
+	for (auto i = 0, j = 0; i < qua.size() && j < s.size(); j+=abs(qua[i]), i++)
+	{
+		if (qua[i] > 0)
+		{
+			file.write((char*)(&qua[i]), sizeof(int));
+			su = s.substr(j, qua[i]);
+			file.write((char*)(&su), su.size()*sizeof(char));
+		}
+		else if (qua[i] < 0)
+		{
+			file.write((char*)(&qua[i]), sizeof(int));
+			file.write((char*)(&s[j]), sizeof(char));
+		}
+	}
+	file.close(); */
+
+	/*in.close();
+	out.close();*/
+	return 0;
+}
