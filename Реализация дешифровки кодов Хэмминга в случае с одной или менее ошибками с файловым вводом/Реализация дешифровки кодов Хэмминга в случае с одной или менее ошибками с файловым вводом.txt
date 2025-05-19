@@ -1,0 +1,282 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <stdio.h>
+#include <ctime>
+#include <cmath>
+#include <string>
+#include <stack>
+#include <algorithm>
+#include <numeric>
+#include <queue>
+#include <cstdlib>
+#include <map>
+#include <chrono>
+#include <set>
+#include <iomanip>
+#include <iterator>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+/*#define fi first;
+#define se second;*/
+
+int gcd(int a, int b)
+{
+	while (b) {
+		a %= b;
+		swap(a, b);
+	}
+	return a;
+}
+
+int lcm(int a, int b)
+{
+	return a / gcd(a, b) * b;
+}
+
+ll llgcd(ll a, ll b)
+{
+	while (b) {
+		a %= b;
+		swap(a, b);
+	}
+	return a;
+}
+
+ll lllcm(ll a, ll b)
+{
+	return a / gcd(a, b) * b;
+}
+
+ull ullgcd(ull a, ull b)
+{
+	while (b) {
+		a %= b;
+		swap(a, b);
+	}
+	return a;
+}
+
+ull ulllcm(ull a, ull b)
+{
+	return a / gcd(a, b) * b;
+}
+
+bool ispal(string s)
+{
+	for (auto i = 0; i * 2 <= s.size(); i++)
+		if (s[i] != s[s.size() - 1 - i])
+			return 0;
+	return 1;
+}
+
+string sreverse(string s)
+{
+	for (auto i = 0; i < s.size() / 2; i++)
+		swap(s[i], s[s.size() - i - 1]);
+	return s;
+}
+
+vector<int> vreverse(vector<int>& s)
+{
+	for (auto i = 0; i < s.size() / 2; i++)
+		swap(s[i], s[s.size() - i - 1]);
+	return s;
+}
+
+void ErathosphenesSieve(int n, vector<int>& result)
+{
+	result.clear();
+	int i = 0, k = 2;
+	int* a = new int[n];
+	bool* b = new bool[n];
+	for (i = 0; i < n; i++)
+	{
+		a[i] = i;
+	}
+	for (i = 0; i < n; i++)
+	{
+		b[i] = true;
+	}
+	while (k * k <= n)
+	{
+		if (b[k])
+		{
+			for (i = k * k; i < n; i += k)
+			{
+				b[i] = false;
+			}
+		}
+		k++;
+	}
+	for (i = 0; i < n; i++)
+	{
+		if (b[i] == true)
+		{
+			result.push_back(a[i]);
+		}
+	}
+}
+
+ull indpreffunc(string s, ll ind)
+{
+	ull res=0;
+	ll t;
+	for (ll i = 0; i+1 < ind; i++)
+	{
+		t = i;
+		for (auto j = ind; j > 0 && t>-1; )
+		{
+			if (s[j] != s[t])
+			{
+				break;
+			}
+			if (t == 0)
+			{
+				res=(res<ind-j+1?ind-j+1:res);
+			}
+			j--;
+			t--;
+		}
+	}
+	return res;
+}
+
+ull ullindpreffunc(string s, ll ind)
+{
+	ull res = 0;
+	ll t;
+	for (ll i = 0; i + 1 < ind; i++)
+	{
+		t = i;
+		for (auto j = ind; j > 0 && t > -1; )
+		{
+			if (s[j] != s[t])
+			{
+				break;
+			}
+			if (t == 0)
+			{
+				res = (res < ind - j + 1 ? ind - j + 1 : res);
+			}
+			j--;
+			t--;
+		}
+	}
+	return res;
+}
+
+void ullpreffunc(string s, vector<ull>& res)
+{
+	res.resize(s.size(), 0);
+	for (ll i = 1; i < s.size(); i++)
+	{
+		if (res[i - 1] == 0)
+		{
+			if (s[i] == s[0])
+			{
+				res[i] = 1;
+			}
+		}
+		else
+		{
+			if (s[i] == s[res[i - 1]])
+			{
+				res[i] = res[i - 1] + 1;
+			}
+			else
+			{
+				res[i] = ullindpreffunc(s, i);
+			}
+		}
+	}
+}
+
+void preffunc(string s, vector<int>& res)
+{
+	res.resize(s.size(), 0);
+	for (int i = 1; i < s.size(); i++)
+	{
+		if (res[i - 1] == 0)
+		{
+			if (s[i] == s[0])
+			{
+				res[i] = 1;
+			}
+		}
+		else
+		{
+			if (s[i] == s[res[i - 1]])
+			{
+				res[i] = res[i - 1]+1;
+			}
+			else
+			{
+				res[i]=indpreffunc(s, i);
+			}
+		}
+	}
+}
+
+bool c(ll a, ll b)
+{
+	return a > b;
+}
+
+string toNBase(ll n, ll k)
+{
+	string s;
+	while (n > 0)
+	{
+		s.push_back(n % k + 48);
+		n /= k;
+	}
+	return sreverse(s);
+}
+
+string strbasmov(string s)
+{
+	string res=s;
+	res.back() = s[0];
+	for (auto i = 1; i < s.size(); i++)
+	{
+		res[i - 1] = s[i];
+	}
+	return res;
+}
+
+int neicou(vector<vector<vector<int>>> m, int i, int j, int curmat)
+{
+	return m[curmat ^ 1][i - 1][j - 1] + m[curmat ^ 1][i - 1][j] + m[curmat ^ 1][i - 1][j + 1] + m[curmat ^ 1][i][j - 1] + m[curmat ^ 1][i][j + 1] + m[curmat ^ 1][i + 1][j - 1] + m[curmat ^ 1][i + 1][j] + m[curmat ^ 1][i + 1][j + 1];
+	//return m[curmat ^ 1][i - 1][j] + m[curmat ^ 1][i][j - 1] + m[curmat ^ 1][i][j + 1] + m[curmat ^ 1][i + 1][j];
+}
+
+int main()
+{
+	ifstream in("flow.in.TXT");
+	ofstream out("flow.out.TXT");
+
+	int m[7], errpos;
+	string mes, res, resmes;
+	in >> mes;
+	for (auto i = 0; i + 6 < mes.size(); i += 7)
+	{
+		errpos = 0;
+		m[0] = (mes[i + 2] - 48 + mes[i + 4] - 48 + mes[i + 6] - 48) % 2;
+		m[1] = (mes[i + 2] - 48 + mes[i + 5] - 48 + mes[i + 6] - 48) % 2;
+		m[3] = (mes[i + 4] - 48 + mes[i + 5] - 48 + mes[i + 6] - 48) % 2;
+		errpos = (m[0] + 48 == mes[i] ? 0 : 1) + (m[1] + 48 == mes[i + 1] ? 0 : 2) + (m[3] + 48 == mes[i + 3] ? 0 : 4);
+		if (errpos > 0)
+			mes[i + errpos - 1] ^= 1;
+		res += mes[i + 2];
+		res += mes[i + 4];
+		res += mes[i + 5];
+		res += mes[i + 6];
+	}
+	out << res;
+
+	in.close();
+	out.close();
+	return 0;
+}
